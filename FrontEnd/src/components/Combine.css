@@ -1,0 +1,28 @@
+/* .mobile{
+    color: red;
+} */
+
+
+
+/* For mobile devices */
+@media only screen and (max-width: 600px) {
+    /* Add your mobile-specific styles here */
+    /* .mobile{
+        color: yellow;
+    } */
+}
+
+/* For tablet devices */
+@media only screen and (min-width: 601px) and (max-width: 1024px) {
+    /* Add your tablet-specific styles here */
+}
+
+/* For laptop devices */
+@media only screen and (min-width: 1025px) and (max-width: 1440px) {
+    /* Add your laptop-specific styles here */
+}
+
+/* For desktop devices */
+@media only screen and (min-width: 1441px) {
+    /* Add your desktop-specific styles here */
+}
