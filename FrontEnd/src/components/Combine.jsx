@@ -13,20 +13,47 @@ import {
   Text,
   useToast,
 } from "@chakra-ui/react";
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import axios from "axios";
 import { PhoneIcon } from "@chakra-ui/icons";
 import squarelogo from '../Data/SquareLogo.gif';
+import { cashfree } from "../cashfree/utils";
 
 const Combine = () => {
   const toast = useToast();
   const [fname, setFname] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
-  let uri = "https://plum-gharial-yoke.cyclic.app/users/add";
+  const [sessionId, setSessionId] = useState("")
+  let uri = "http://localhost:3001/api/v1/payment"
 
   const handleClick = () => {
-    if (fname !== "" && email!== "" && phone !== "") {
+    if (fname !== "" && email !== "" && phone !== "") {
+
+      if (email !== "") {
+        const domain = email.split("@");
+        if (domain.length !== 2) {
+          return toast({
+            title: "Pls Enter Valid Email id.",
+            description: `Please Fill Required Details`,
+            status: "error",
+            duration: 2000,
+            isClosable: true,
+          });
+        }
+      }
+
+      if (phone !== "") {
+        if (phone.length !== 10) {
+          return toast({
+            title: "Pls Enter Valid Phone No.",
+            description: `Phone Number Should be of Length 10`,
+            status: "error",
+            duration: 2000,
+            isClosable: true,
+          });
+        }
+      }
       const name = `${fname}`;
       const userData = {
         name,
@@ -37,6 +64,7 @@ const Combine = () => {
       axios
         .post(uri, userData)
         .then((res) => {
+          setSessionId(res.data.message);
           toast({
             title: "Data submitted successfully",
             status: "success",
@@ -69,6 +97,31 @@ const Combine = () => {
     }
   };
 
+
+
+  useEffect(() => {
+    if (sessionId !== "") {
+      handlePayment()
+    }
+  }, [sessionId])
+
+  const handlePayment = () => {
+    let checkoutOptions = {
+      paymentSessionId: sessionId,
+      returnUrl: `http://localhost:3001/api/v1/status/{order_id}`,
+    }
+    cashfree.checkout(checkoutOptions).then(function (result) {
+      if (result.error) {
+        alert(result.error.message)
+      }
+      if (result.redirect) {
+        console.log(result);
+        console.log("Redirection")
+      }
+    });
+
+  }
+
   return (
     <>
       <Box bgGradient="linear(to-r, #131543, #525368, #131543)" pb={20}>
@@ -82,18 +135,18 @@ const Combine = () => {
             margin={"auto"}
             width={"80%"}
             gap={2}
-            textAlign={{base:'center', sm:'center', md:'center', lg:'start'}}
+            textAlign={{ base: 'center', sm: 'center', md: 'center', lg: 'start' }}
           >
             <Box>
-            <Image width={'100%'} margin={'auto'} src={squarelogo}/>
+              <Image width={'100%'} margin={'auto'} src={squarelogo} />
             </Box>
             <Center>
-            <Text fontSize={{base:24, sm:36, md: 40, lg:48}} fontWeight={600} width={"100%"}>
-              Master Stock Trading with{" "}
-              <span style={{ color: "#EBB913" }}>StockTutor</span>
-            </Text>
+              <Text fontSize={{ base: 24, sm: 36, md: 40, lg: 48 }} fontWeight={600} width={"100%"}>
+                Master Stock Trading with{" "}
+                <span style={{ color: "#EBB913" }}>StockTutor</span>
+              </Text>
             </Center>
-            <Text fontSize={{base:16, sm:16, md:18, lg:20}}>
+            <Text fontSize={{ base: 16, sm: 16, md: 18, lg: 20 }}>
               Discover the ins and outs of stock trading in the most simplest and
               user-friendly way. Elevate your investment knowledge with
               StockTutor's easy-to-follow guidance.
@@ -102,16 +155,16 @@ const Combine = () => {
 
           <Stack
             margin={"auto"}
-            gap={{base:4, sm:8, md:8, lg:10}}
+            gap={{ base: 4, sm: 8, md: 8, lg: 10 }}
             width={"65%"}
           >
-            <Box width={"80%"} margin={{base:'auto', sm:'auto', md:'auto', lg:'unset'}}>
+            <Box width={"80%"} margin={{ base: 'auto', sm: 'auto', md: 'auto', lg: 'unset' }}>
               <Text
                 color={"whitesmoke"}
                 fontStyle={"italic"}
                 // fontFamily={"cursive"}
-                fontSize={{base:16, sm:20, md:24, lg:24}}
-                textAlign={{base:'center', sm:'center', md:'center', lg:'start'}}
+                fontSize={{ base: 16, sm: 20, md: 24, lg: 24 }}
+                textAlign={{ base: 'center', sm: 'center', md: 'center', lg: 'start' }}
               >
                 Register now to secure your Financial future !!
               </Text>
@@ -120,7 +173,7 @@ const Combine = () => {
             <FormControl id="fname" isRequired>
               <FormLabel color={"whitesmoke"}>Name</FormLabel>
               <Input
-                size={{base:'sm',sm:'md', md:'md', lg:'md'}}
+                size={{ base: 'sm', sm: 'md', md: 'md', lg: 'md' }}
                 bg={"white"}
                 placeholder="Full name"
                 value={fname}
@@ -132,7 +185,7 @@ const Combine = () => {
             <FormControl id="email" isRequired>
               <FormLabel color={"whitesmoke"}>Email</FormLabel>
               <Input
-              size={{base:'sm',sm:'md', md:'md', lg:'md'}}
+                size={{ base: 'sm', sm: 'md', md: 'md', lg: 'md' }}
                 bg={"white"}
                 placeholder="Email address"
                 value={email}
@@ -143,7 +196,7 @@ const Combine = () => {
 
             <FormControl id="phone" isRequired>
               <FormLabel color={"whitesmoke"}>Contact</FormLabel>
-              <InputGroup size={{base:'sm',sm:'md', md:'md', lg:'md'}}>
+              <InputGroup size={{ base: 'sm', sm: 'md', md: 'md', lg: 'md' }}>
                 <InputLeftElement pointerEvents="none">
                   <PhoneIcon color="gray.400" />
                 </InputLeftElement>
@@ -159,7 +212,7 @@ const Combine = () => {
 
             <Box mt={5}>
               <Button
-              size={{base:'sm',sm:'md', md:'md', lg:'md'}}
+                size={{ base: 'sm', sm: 'md', md: 'md', lg: 'md' }}
                 width={"100%"}
                 bgColor={"#EBB913"}
                 onClick={handleClick}

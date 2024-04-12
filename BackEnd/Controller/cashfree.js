@@ -64,7 +64,7 @@ const checkStatus = async (req, res) => {
             .then(function (response) {
                 console.log("Testing Response Status in GET REQUEST", response.data.order_status);
                 if (response.data.order_status == "PAID") {
-                    return res.redirect('https://stock-backend-urrx.onrender.com/success')
+                    return res.redirect('http://localhost:3002/success')
                 } else {
                     let terminateStatus = changeToTerminateStatus(orderid)
                     console.log("terminate status", terminateStatus);
@@ -73,11 +73,11 @@ const checkStatus = async (req, res) => {
                         let terminatereason = getTerminateReason(orderid)
                         console.log("Terminate Reason Data", terminatereason);
                         if (terminatereason.stats === "success") {
-                            return res.redirect(`https://stock-backend-urrx.onrender.com/reason/:${terminatereason.reason}`)
+                            return res.redirect(`http://localhost:3002/reason/:${terminatereason.reason}`)
                         }
                     } else {
                         console.log("unsuccessfully changed status to terminated");
-                        return res.redirect('https://stock-backend-urrx.onrender.com/failure')
+                        return res.redirect('http://localhost:3002/failure')
                     }
                 }
             })

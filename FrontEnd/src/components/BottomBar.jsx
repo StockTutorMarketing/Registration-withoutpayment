@@ -19,23 +19,49 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useState,useEffect} from "react";
 import AllTutors from "../Data/AllTutorsForm.png";
 import { PhoneIcon } from "@chakra-ui/icons";
 import "./BottomBar.css";
 import { FaIndianRupeeSign } from "react-icons/fa6";
+import { cashfree } from "../cashfree/utils";
 
 const BottomBar = () => {
   const toast = useToast();
   const { isOpen, onOpen, onClose } = useDisclosure();
-
   const [fname, setFname] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
-  let uri = "https://plum-gharial-yoke.cyclic.app/users/add";
+  const [sessionId, setSessionId] = useState("")
+  let uri = "http://localhost:3001/api/v1/payment"
 
   const handleClick = () => {
     if (fname !== "" && email !== "" && phone !== "") {
+
+      if (email !== "") {
+        const domain = email.split("@");
+        if (domain.length !== 2) {
+          return toast({
+            title: "Pls Enter Valid Email id.",
+            description: `Please Fill Required Details`,
+            status: "error",
+            duration: 2000,
+            isClosable: true,
+          });
+        }
+      }
+
+      if (phone !== "") {
+        if (phone.length !== 10) {
+          return toast({
+            title: "Pls Enter Valid Phone No.",
+            description: `Phone Number Should be of Length 10`,
+            status: "error",
+            duration: 2000,
+            isClosable: true,
+          });
+        }
+      }
       const name = `${fname}`;
       const userData = {
         name,
@@ -46,6 +72,7 @@ const BottomBar = () => {
       axios
         .post(uri, userData)
         .then((res) => {
+          setSessionId(res.data.message);
           toast({
             title: "Data submitted successfully",
             status: "success",
@@ -77,6 +104,34 @@ const BottomBar = () => {
       });
     }
   };
+
+
+
+  useEffect(() => {
+    if (sessionId !== "") {
+      handlePayment()
+    }
+  }, [sessionId])
+
+  const handlePayment = () => {
+    let checkoutOptions = {
+      paymentSessionId: sessionId,
+      returnUrl: `http://localhost:3001/api/v1/status/{order_id}`,
+    }
+    cashfree.checkout(checkoutOptions).then(function (result) {
+      if (result.error) {
+        alert(result.error.message)
+      }
+      if (result.redirect) {
+        console.log(result);
+        console.log("Redirection")
+      }
+    });
+
+  }
+
+
+
   return (
     <>
       <Box
