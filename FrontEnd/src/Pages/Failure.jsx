@@ -1,9 +1,11 @@
 import React from 'react'
-import { Box, Flex, Heading, Text } from '@chakra-ui/react'
+import { Box, Flex, Heading, Image, Text } from '@chakra-ui/react'
 import { CloseIcon } from '@chakra-ui/icons'
+import alltutors from '../Data/alltutors.png'
+
 const Failure = () => {
   return (
-    <Box textAlign="center" py={10} px={6}>
+    <Box textAlign="center" pt={8} px={6}>
       <Box display="inline-block">
         <Flex
           flexDirection="column"
@@ -21,9 +23,10 @@ const Failure = () => {
         Payment Failed
       </Heading>
       <Text color={'gray.500'}>
-        Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod
-        tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.
+        Payment has been declined...!!
       </Text>
+
+      <Image width={{base:'200%', sm:'150%', md:'100%', lg:'100%'}} src={alltutors}/>
     </Box>
   )
 }
