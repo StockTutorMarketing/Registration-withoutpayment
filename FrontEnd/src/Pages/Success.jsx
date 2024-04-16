@@ -12,7 +12,6 @@ const Success = () => {
       </Heading>
       <Text color={'gray.500'}>
         Payment has been successfully done...!!
-        
       </Text>
 
       <Image width={{base:'200%', sm:'150%', md:'100%', lg:'100%'}} src={alltutors}/>

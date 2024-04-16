@@ -2,6 +2,15 @@
     color: red;
 } */
 
+.gradient_anim_btn_combine {
+  width: 100%;
+    background: -webkit-linear-gradient(225deg, #EBB913, #eeeef1,             
+    #EBB913) 5% 5% / 5% 5%;
+    background-size: 200% auto;
+    -webkit-animation: gradient_move 5s ease infinite;
+    animation: gradient_move 5s ease infinite;
+  }
+
 
 
 /* For mobile devices */
