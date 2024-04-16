@@ -168,8 +168,6 @@ const Combine = () => {
             >
               <Box
               className="gradient_anim_btn_combine"
-                // bgGradient="linear(to-r, gray.300, rgb(235,185,19), pink.200)"
-                // border={"1px solid whitesmoke"}
                 borderRadius={10}
                 padding={"2px 12px"}
                 variant="outline"
@@ -181,7 +179,6 @@ const Combine = () => {
               <Box
                 className="gradient_anim_btn_combine"
                 variant="outline"
-                // border={"1px solid whitesmoke"}
                 borderRadius={10}
                 padding={"2px 12px"}
               >
