@@ -171,7 +171,7 @@ const Combine = () => {
                 // bgGradient="linear(to-r, gray.300, rgb(235,185,19), pink.200)"
                 // border={"1px solid whitesmoke"}
                 borderRadius={10}
-                padding={2}
+                padding={"2px 12px"}
                 variant="outline"
               >
                 Date
@@ -183,7 +183,7 @@ const Combine = () => {
                 variant="outline"
                 // border={"1px solid whitesmoke"}
                 borderRadius={10}
-                padding={2}
+                padding={"2px 12px"}
               >
                 Time <br /> 6:00 PM
               </Box>
