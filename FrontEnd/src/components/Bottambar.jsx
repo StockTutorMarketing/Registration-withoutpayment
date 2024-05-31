@@ -21,7 +21,7 @@ import {
   import AllTutors from "../Data/AllTutorsForm.png";
   import { PhoneIcon } from "@chakra-ui/icons";
   import "./BottomBar.css";
-  import { FaIndianRupeeSign } from "react-icons/fa6";
+
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
   
@@ -180,7 +180,7 @@ const toast = useToast();
                         fontWeight={640}
                       >
                         <Flex align={"center"} gap={{base:1, sm:2, md:3, lg:3}}>
-                        <Flex alignItems={'center'} fontSize={{ base: 16, sm: 18, md: 20, lg: 26 }}><FaIndianRupeeSign /> Don’t miss out ! {" "}</Flex>
+                        <Flex alignItems={'center'} fontSize={{ base: 16, sm: 18, md: 20, lg: 26 }}>Don’t miss out ! {" "}</Flex>
                           
                           <Text fontSize={{ base: 12, sm: 14, md: 16, lg: 20 }}>
                             
